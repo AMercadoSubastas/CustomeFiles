@@ -29,7 +29,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
 
 	
 	mysqli_select_db($amercado,$database_amercado);
-	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE razsoc = %s",GetSQLValueString($_POST['cliente'],"text"));
+	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE cuit = %s",GetSQLValueString($_POST['cuit'],"text"));
 	$cliente2 = mysqli_query($amercado,$query_cliente2) or die(mysqli_error($amercado));
 	$row_cliente2 = mysqli_fetch_assoc($cliente2);
 	
@@ -1743,20 +1743,41 @@ function MM_validateForm() { //v4.0
          <td height="20" class="ewTableHeader">Fecha de remate</td>
           <td><input name="fecha_remate" type="text" size="25" /></td>
            </tr>
-        <tr>
-          <td height="10" class="ewTableHeader">Cliente</td>
+		   <tr>
+
+
+
+      <tr>
+          <td height="10" class="ewTableHeader">Cliente </td>
           <td>
+			<div class="search-box">
+        		<input id="search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+     	</tr>
+		 <tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+		</tr>
 
-		<!-- CLIENTES -->
-
-    <div class="search-box">
-        <input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-        <div class="result"></div>
-    </div>
-
-
-</td>
-         </tr>
+		<tr hidden>
+			<td height="10" class="ewTableHeader">Razosn Social</td>
+			<td>
+				<div class="search-box-razan-social">
+					<input id="razon-social" name="razsoc" type="text"/>
+					<div class="result"></div>
+				</div>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
       </table></td>
       <td width="1">&nbsp;</td>
       <td>&nbsp;</td>

@@ -1,5 +1,7 @@
 <?php
 
+
+
 // datos a pedir gestionar en el .php
 
     mysqli_select_db($amercado,$database_amercado);

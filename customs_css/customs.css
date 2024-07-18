@@ -80,6 +80,22 @@ input[type="hidden"] {
     position: relative;
 }
 
+.search-box-A{
+    position: relative;
+}
+
+.search-box-B{
+    position: relative;
+}
+
+.search-box-cuit{
+    position: relative;
+}
+
+.search-box-razan-social{
+    position: relative;
+}
+
 .result{
     position: absolute;
     z-index: 999;

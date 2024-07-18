@@ -21,8 +21,11 @@ validoUsu($cod_usuario, $amercado);
 
 $sigo_y_grabo = 0;
 
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
-    
+  
+	
+echo $_POST['cuit'];
     //=========================================================================================
 	//Datos Correspondientes a la factura
     /**
@@ -97,13 +100,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
     $fecha_vencimiento_pago = date('Y-m-d');
 
     mysqli_select_db($amercado,$database_amercado);
-	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE razsoc = %s",GetSQLValueString($_POST['cliente'],"text"));
+	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE cuit = %s",GetSQLValueString($_POST['cuit'],"text"));
 	$cliente2 = mysqli_query($amercado,$query_cliente2) or die(mysqli_error($amercado));
 	$row_cliente2 = mysqli_fetch_assoc($cliente2);
 	
+
 	$cod_cliente = $row_cliente2['codnum'];
 	
-    $cuit_enti = $row_cliente2['cuit'];
+    $cuit_enti = $_POST['cuit'];
+
+	var_dump($cuit_enti);
 	if (isset($cuit_enti)) {
 		$cuit_enti2 = str_replace("-","",$cuit_enti);
 	}
@@ -141,11 +147,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
         $fecha_servicio_desde = null;
         $fecha_servicio_hasta = null;
     }
-    $ImpTotal     = $_POST['tot_general']; 
-    $ImpTotConc   = 0.00; 
-    $importe_gravado = $_POST['totneto21'];
+    $ImpTotal     = floatval($_POST['tot_general']);
+    $ImpTotConc   = 0.00;
+    $importe_gravado = floatval($_POST['totneto21']);
     $importe_exento_iva = 0.00;
-    $importe_iva  = $_POST['totiva21'];
+    $importe_iva  = floatval($_POST['totiva21']);
     $ImpTrib      = 0.00;
     $FchServDesde = intval(date('Ymd'));
     $FchServHasta = intval(date('Ymd'));
@@ -269,12 +275,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
 		}
 		else {
 	    	$IvaAlicuotaId = 5; // 21% Ver - AfipWsfev1::FEParamGetTiposIva()
-	    	$IvaAlicuotaBaseImp = $_POST['totneto21'];
-    		$IvaAlicuotaImporte = $_POST['totiva21'] ;//21.00;  
+	    	$IvaAlicuotaBaseImp = floatval($_POST['totneto21']);
+    		$IvaAlicuotaImporte = floatval($_POST['totiva21']) ;//21.00;  
             $data = array(
                 'CantReg' 	=> 1, // Cantidad de facturas a registrar
                 'PtoVta' 	=> $punto_de_venta,
-                'CbteTipo' 	=> $tipo_de_factura, 
+                'CbteTipo' 	=> $tipo_de_factura,
                 'Concepto' 	=> $concepto,
                 'DocTipo' 	=> $tipo_de_documento,
                 'DocNro' 	=> $numero_de_documento,
@@ -320,8 +326,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
 	$sigo_y_grabo = 0;
 	//======================================================================================
 
-    /** 
-     * Creamos la Factura 
+    /**
+     * Creamos la Factura
      **/
     //print_r($data);
     
@@ -1984,16 +1990,37 @@ function MM_validateForm() { //v4.0
          <td height="20" class="ewTableHeader">Fecha de remate</td>
           <td><input name="fecha_remate" type="text" size="25" /></td>
            </tr>
-        <tr>
-          <td height="10" class="ewTableHeader"> Cliente </td>
-          <td><!-- CLIENTES -->
+		   <tr>
+          <td height="10" class="ewTableHeader">Cliente </td>
+          <td>
+			<div class="search-box-A">
+        		<input id="A-search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+    </tr>
+	<tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="A-CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
 
-	<div class="search-box">
-		<input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-		<div class="result"></div>
-	</div>
-</td>
-         </tr>
+	 <tr hidden>
+          <td height="10" class="ewTableHeader">Razon Social</td>
+          <td>
+			<div class="search-box-razan-social">
+        		<input id="A-razon-social" type="text" hidden/>
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
       </table></td>
       <tr>
     </tr>

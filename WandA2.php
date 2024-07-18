@@ -148,7 +148,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
 	$tot_general = intval($_POST['tot_general']);	
 
 	mysqli_select_db($amercado, $database_amercado);
-	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE razsoc = %s",GetSQLValueString($_POST['cliente'],"text"));
+	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE cuit = %s",GetSQLValueString($_POST['cuit'],"text"));
 	$cliente2 = mysqli_query($amercado, $query_cliente2) or die("ERROR EN LECTURA ENTIDADES 148");
 	$row_cliente2 = mysqli_fetch_assoc($cliente2);
 
@@ -2615,15 +2615,36 @@ var selec = form.tipos.options;
           	<td><input name="fecha_remate" type="text" size="25" /></td>
         </tr>
         <tr>
-          	<td height="10" class="ewTableHeader">Cliente </td>
-          	<td><!-- CLIENTES -->
+          <td height="10" class="ewTableHeader">Cliente </td>
+          <td>
+			<div class="search-box-A">
+        		<input id="A-search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+    </tr>
+	<tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="A-CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
 
-			<div class="search-box">
-				<input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-				<div class="result"></div>
-			</div>
-			</td>
-     	</tr>
+	 <tr hidden>
+          <td height="10" class="ewTableHeader">Razon Social</td>
+          <td>
+			<div class="search-box-razan-social">
+        		<input id="A-razon-social" type="text" hidden/>
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
      	</table></td>
     </tr>
     

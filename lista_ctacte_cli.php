@@ -18,15 +18,37 @@
  <td width="181">&nbsp;
   
  </td>
-         <tr>
-          <td height="10">Cliente </td>
-          <td>  
-          <div class="search-box">
-            <input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-            <div class="result"></div>
-	        </div></td>
-          <td></td>
-        </tr>
+ <tr>
+          <td height="10" class="ewTableHeader">Cliente </td>
+          <td>
+			<div class="search-box">
+        		<input id="search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+    </tr>
+	<tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
+
+	 <tr hidden>
+          <td height="10" class="ewTableHeader">Razon Social</td>
+          <td>
+			<div class="search-box-razan-social">
+        		<input id="razon-social" type="text" hidden />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
  
       
 

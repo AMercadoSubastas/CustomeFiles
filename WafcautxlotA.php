@@ -303,7 +303,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
     //CUIT (Sin guiones)
     $empresaCuit  = '30718033612';
     //El alias debe estar mencionado en el nombre de los archivos de certificados y firmas digitales
-    $empresaAlias = 'SubastasTesting'; //'SubastasV8';   ver el nuevo alias
+    $empresaAlias = 'SubastasV8'; //'SubastasV8';   ver el nuevo alias
 
 	//Obtener los datos de la factura que se desea generar
     //Elegir uno de los include como para tener diferentes tipos de factura

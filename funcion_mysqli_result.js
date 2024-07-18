@@ -20,7 +20,7 @@ $(document).ready(function(){
         $('#A-CUIT').val(cliente[0].trim());
         $('#A-razon-social').val(cliente[1].trim());
         $("#A-search-field").val(selectedText);       
-
+        $(".result").empty();
     });
 });
 
@@ -46,7 +46,7 @@ $(document).ready(function(){
         $('#B-CUIT').val(cliente[0].trim());
         $('#B-razon-social').val(cliente[1].trim());
         $("#B-search-field").val(selectedText);       
-
+        $(".result").empty();
     });
 });
 
@@ -64,8 +64,12 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on("click", ".result p", function(){
-        $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
-        $(this).parent(".result").empty();
+    $(document).on("click", ".search-box .result p", function(){
+        let selectedText = $(this).text();
+        let cliente = selectedText.split("|");
+        $('#CUIT').val(cliente[0].trim());
+        $('#razon-social').val(cliente[1].trim());
+        $("#search-field").val(selectedText);       
+        $(".result").empty();
     });
 });

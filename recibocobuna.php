@@ -38,10 +38,38 @@ $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
       <td width="267">Nombre del Cliente : </td>
       <td>
 
+
+      <tr>
+          <td height="10" class="ewTableHeader">Cliente </td>
+          <td>
 			<div class="search-box">
-				<input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-				<div class="result"></div>
-			</div>	
+        		<input id="search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+     	</tr>
+		 <tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+		</tr>
+
+		<tr hidden>
+			<td height="10" class="ewTableHeader">Razosn Social</td>
+			<td>
+				<div class="search-box-razan-social">
+					<input id="razon-social" name="razsoc" type="text"/>
+					<div class="result"></div>
+				</div>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
 
 			</td>
     </tr>

@@ -74,7 +74,7 @@ $tot_efe = 0.00;
 		$total_dep_terceros = 0.00;
 		$remate = $row_remate["ncomp"];
 		//ACA LEO LAS FACTURAS, NCRED, NDEB RELACIONADAS CON EL REMATE,POR LOTES en_liquid=1
-		$query_cabfac = sprintf("SELECT * FROM cabfac WHERE  codrem = $remate AND (((tcomp = 115 OR tcomp = 116 OR tcomp = 117 OR tcomp = 103) AND estado = 'S') OR (tcomp IN (119,120,122,123,124) AND en_liquid = 1)) ORDER BY tcomp,ncomp");
+		$query_cabfac = sprintf("SELECT * FROM cabfac WHERE  codrem = $remate AND (((tcomp = 115 OR tcomp = 116 OR tcomp = 117 OR tcomp = 103 OR tcomp = 142) AND estado = 'S') OR (tcomp IN (119,120,121, 122,123,124,135, 137,138,144) AND en_liquid = 1)) ORDER BY tcomp,ncomp");
 		$cabfac = mysqli_query($amercado, $query_cabfac) or die(mysqli_error($amercado));
 		while($row_cabfac = mysqli_fetch_array($cabfac)) {
 			$tcomp     = $row_cabfac["tcomp"];
@@ -89,7 +89,9 @@ $tot_efe = 0.00;
 				case 117:
 				case 122:
 				case 123:
-                		case 124:
+                case 124:
+				case 138:
+				case 142:
 					$tot_cbte = ($row_cabfac["totneto21"] * 1.21) + ($row_cabfac["totneto105"] + $row_cabfac["totiva105"]);
 					break;	
 				case 103:
@@ -97,7 +99,10 @@ $tot_efe = 0.00;
 					break;				
 				case 119:
 				case 120:
-                		case 121:
+                case 121:
+				case 135:
+				case 144:
+				case 137:
                
 					$tot_cbte = (($row_cabfac["totneto21"]*1.21) + ($row_cabfac["totneto105"]*1.105)) * -1;
 					break;
@@ -235,6 +240,7 @@ $tot_efe = 0.00;
             $total_retenciones  = 0.00;
             $total_dep_terceros = 0.00;
             $tot_efe            = 0.00;
+			$nrodoc_rc          = "";
         }
         if ($cant_reng > 34) {
 			$cant_reng  = 0;

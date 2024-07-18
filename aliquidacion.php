@@ -42,11 +42,11 @@ $fechatope_ser = $row_ser['fechatope'];
 $nrotope_ser = $row_ser['nrohasta'];
 $nroact_ser = $row_ser['nroact'];
 if ($fechatope_ser < $fecha_hoy) {
-    echo '<script language="javascript">alertaError("EL CAI DEL FORMULARIO DE LIQUIDACION A0001 VENCIO EL ".$fechatope_ser.")</script>';
+    echo '<script language="javascript">alertaError("EL CAI DEL FORMULARIO DE LIQUIDACION A0006 VENCIO EL ".$fechatope_ser.")</script>';
     exit;
 }
 if ($nrotope_ser - 20 <= ($nroact_ser)) {
-    echo '<script language="javascript">alertaError("EL TALONARIO DE LIQUIDACION A0001 TIENE MENOS DE 20 FORMULARIOS")</script>' ;
+    echo '<script language="javascript">alertaError("EL TALONARIO DE LIQUIDACION A0006 TIENE MENOS DE 20 FORMULARIOS")</script>' ;
    
 }
 
@@ -59,11 +59,11 @@ $fechatope_ser = $row_ser['fechatope'];
 $nrotope_ser = $row_ser['nrohasta'];
 $nroact_ser = $row_ser['nroact'];
 if ($fechatope_ser < $fecha_hoy) {
-    echo '<script language="javascript">alertaError("EL CAI DEL FORMULARIO DE LIQUIDACION B0001 VENCIO EL ".$fechatope_ser."")';
+    echo '<script language="javascript">alertaError("EL CAI DEL FORMULARIO DE LIQUIDACION B0006 VENCIO EL ".$fechatope_ser."")';
     
 }
 if ($nrotope_ser-20 <= ($nroact_ser)) {
-    echo '<script language="javascript">alertaError("EL TALONARIO DE LIQUIDACION B0001 TIENE MENOS DE 20 FORMULARIOS")';
+    echo '<script language="javascript">alertaError("EL TALONARIO DE LIQUIDACION B0006 TIENE MENOS DE 20 FORMULARIOS")';
     
 }
 
@@ -238,7 +238,7 @@ $f_hasta = substr($f_hasta,6,4)."-".substr($f_hasta,3,2)."-".substr($f_hasta,0,2
 	
 	// ACA SUMO TODAS LAS FACTURAS Y NDEB QUE AFECTAN LA LIQUIDACION
 	
-    $res1 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105 , SUM( `totneto21` ) ,SUM( `totneto21` *'$porcen_iva' ) ,  SUM( (`totneto21`  * '$porcen_iva') + `totneto21`)  as total_21 FROM `cabfac` WHERE `codrem` = '$rematenum' AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `tcomp`!='125'  AND `tcomp`!='126' AND `tcomp`!='119'  AND `tcomp`!='120'  AND `tcomp`!='122'    AND `tcomp`!='123'  AND `tcomp`!='127'   AND `tcomp`!='133'  AND `tcomp`!='134'  AND `tcomp`!='121'  AND `tcomp`!='135'  AND `tcomp`!='137' AND `en_liquid` = 1" ; 
+    $res1 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105 , SUM( `totneto21` ) ,SUM( `totneto21` *'$porcen_iva' ) ,  SUM( (`totneto21`  * '$porcen_iva') + `totneto21`)  as total_21 FROM `cabfac` WHERE `codrem` = '$rematenum' AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `tcomp`!='125'  AND `tcomp`!='126' AND `tcomp`!='119'  AND `tcomp`!='120'  AND `tcomp`!='122'    AND `tcomp`!='123'  AND `tcomp`!='127'   AND `tcomp`!='133'  AND `tcomp`!='134'  AND `tcomp`!='121'  AND `tcomp`!='135'  AND `tcomp`!='137'   AND `tcomp`!='103' AND `en_liquid` = 1" ; 
     //echo "res1 = ".$res1." ";
     $query_remate = mysqli_query($amercado, $res1) or die("ERROR LEYENDO CABFAC ".$res1." ");
     $totalRows_remate = mysqli_num_rows($query_remate);
@@ -246,24 +246,24 @@ $f_hasta = substr($f_hasta,6,4)."-".substr($f_hasta,3,2)."-".substr($f_hasta,0,2
 	
 	//echo "RES 1 = ".$res1." - ";
     // ACA SUMO LAS FACTURAS DE EXPORTACION
-	/*
+	
     if ($tipo_de_iva== 1) {
-		$res11 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105 , SUM( `totneto21` ) ,SUM( `totiva21`  ) ,  SUM( `totneto21`)  as total_21 FROM `cabfac` WHERE (`codrem` = '$rematenum' AND `tcomp`='103' AND `en_liquid` = 1)" ; 
+		$res11 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105 , SUM( `totneto21` ) ,SUM( `totiva21`  ) ,  SUM( `totneto21`)  as total_21 FROM `cabfac` WHERE (`codrem` = '$rematenum' AND  `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `tcomp`='103' AND `en_liquid` = 1)" ; 
 		
 		$query_remate11 = mysqli_query($amercado, $res11) or die("ERROR LEYENDO CABFAC 6");
 		$totalRows_remate11 = mysqli_num_rows($query_remate11); 
 	}
 	else {
-		$res11 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105 , SUM( `totneto21` ) ,SUM( `totiva21`  ) ,  SUM( `totneto21`)  as total_21 FROM `cabfac` WHERE (`codrem` = '$rematenum' AND `tcomp`='103' AND `en_liquid` = 1)" ; 
+		$res11 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105 , SUM( `totneto21` ) ,SUM( `totiva21`  ) ,  SUM( `totneto21`)  as total_21 FROM `cabfac` WHERE (`codrem` = '$rematenum' AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `tcomp`='103' AND `en_liquid` = 1)" ; 
 		
 		$query_remate11 = mysqli_query($amercado, $res11) or die("ERROR LEYENDO CABFAC 7");
 		$totalRows_remate11 = mysqli_num_rows($query_remate11); 
 
 	}
-	*/
+	
 	// ACA SUMO TODAS LAS NCRED QUE AFECTAN LA LIQUIDACION
 	
-    $res2 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105_2 , SUM( `totneto21` ) , SUM( `totneto21` *'$porcen_iva' ) , SUM( `totneto21` *'$porcen_iva' + `totneto21`)  as total_21_2 FROM `cabfac` WHERE (`codrem` = '$rematenum' AND (`tcomp`='119' OR `tcomp`='120' OR `tcomp`='121' OR `tcomp`='135' OR `tcomp`='137') AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `en_liquid` = 1 AND `cliente` != '$clientes')" ;
+    $res2 ="SELECT SUM( `totneto105` ) , SUM( `totiva105` ) , SUM( `totneto105` + `totiva105` ) as total_105_2 , SUM( `totneto21` ) , SUM( `totneto21` *'$porcen_iva' ) , SUM( `totneto21` *'$porcen_iva' + `totneto21`)  as total_21_2 FROM `cabfac` WHERE (`codrem` = '$rematenum' AND (`tcomp`='119' OR `tcomp`='120' OR `tcomp`='121' OR `tcomp`='135' OR `tcomp`='137' OR `tcomp`='144') AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `en_liquid` = 1 AND `cliente` != '$clientes')" ;
     $query_remate2 = mysqli_query($amercado, $res2) or die("ERROR LEYENDO CABFAC 4");
     $totalRows_remate2 = mysqli_num_rows($query_remate2);
     $rows_remate2 = mysqli_fetch_assoc($query_remate2);
@@ -272,7 +272,7 @@ $f_hasta = substr($f_hasta,6,4)."-".substr($f_hasta,3,2)."-".substr($f_hasta,0,2
 	// ACA SACO  LAS TASAS ADM DE LAS NCRED QUE AFECTAN LA LIQUIDACION
     
 	
-    $res3 ="SELECT SUM(`detfac`.`neto`) , SUM(`detfac`.`neto` * 0.21), SUM(`detfac`.`neto` * 1.21) FROM `detfac`, `cabfac` WHERE (`detfac`.`codrem` = '$rematenum' AND (`detfac`.`tcomp`='119' OR `detfac`.`tcomp`='120' OR `detfac`.`tcomp`='121' OR `detfac`.`tcomp`='135')  AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `detfac`.`tcomp` = `cabfac`.`tcomp` AND `detfac`.`ncomp` = `cabfac`.`ncomp` AND `cabfac`.`en_liquid` = 1  AND `detfac`.`concafac` = '18')";
+    $res3 ="SELECT SUM(`detfac`.`neto`) , SUM(`detfac`.`neto` * 0.21), SUM(`detfac`.`neto` * 1.21) FROM `detfac`, `cabfac` WHERE (`detfac`.`codrem` = '$rematenum' AND (`detfac`.`tcomp`='119' OR `detfac`.`tcomp`='120' OR `detfac`.`tcomp`='121' OR `detfac`.`tcomp`='135' OR `detfac`.`tcomp`='144')  AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND `detfac`.`tcomp` = `cabfac`.`tcomp` AND `detfac`.`ncomp` = `cabfac`.`ncomp` AND `cabfac`.`en_liquid` = 1  AND `detfac`.`concafac` = '18')";
     $query_remate3 = mysqli_query($amercado, $res3) or die("ERROR LEYENDO DETFAC 5");
     $totalRows_remate3 = mysqli_num_rows($query_remate3);
     $rows_remate3 = mysqli_fetch_assoc($query_remate3);
@@ -284,20 +284,12 @@ $f_hasta = substr($f_hasta,6,4)."-".substr($f_hasta,3,2)."-".substr($f_hasta,0,2
 	
 	$iva105 = mysqli_result($query_remate,0,1)  - mysqli_result($query_remate2,0,1);
 	$total_105 = mysqli_result($query_remate,0,2)  - mysqli_result($query_remate2,0,2);
-	$totneto21 = mysqli_result($query_remate,0,3) - mysqli_result($query_remate2,0,3);
+	$totneto21 = mysqli_result($query_remate,0,3) - mysqli_result($query_remate2,0,3) + mysqli_result($query_remate11,0,3);
 	
-	if($rematenum == 563) {
-		$total_21 = mysqli_result($query_remate,0,5)  - mysqli_result($query_remate2,0,5) - 1890000.00;// + mysqli_result($query_remate3,0,2);
-		$iva21 = mysqli_result($query_remate,0,4)  - mysqli_result($query_remate2,0,4) - 1890000.00;// + mysqli_result($query_remate3,0,1);	
-	}
-	else if($rematenum == 465) {
-		$total_21 = mysqli_result($query_remate,0,5)  - mysqli_result($query_remate2,0,5) - 115500.00;// + mysqli_result($query_remate3,0,2);
-		$iva21 = mysqli_result($query_remate,0,4)  - mysqli_result($query_remate2,0,4) - 115500.00;// + mysqli_result($query_remate3,0,1);	
-	}
-	else {
-		$total_21 = mysqli_result($query_remate,0,5)  - mysqli_result($query_remate2,0,5);// + mysqli_result($query_remate3,0,2);
-		$iva21 = mysqli_result($query_remate,0,4)  - mysqli_result($query_remate2,0,4);// + mysqli_result($query_remate3,0,1);
-	}
+	
+	$total_21 = mysqli_result($query_remate,0,5)  - mysqli_result($query_remate2,0,5) + mysqli_result($query_remate11,0,5);// + mysqli_result($query_remate3,0,2);
+	$iva21 = mysqli_result($query_remate,0,4)  - mysqli_result($query_remate2,0,4);// + mysqli_result($query_remate3,0,1);
+	
     $netonograv = 0.00;
     //$netonograv = mysqli_result($query_remate11,0,3);
 	//echo "mysqli_result(query_remate,0,0) = ".mysqli_result($query_remate,0,0)." mysqli_result(query_remate2,0,1) = ".mysqli_result($query_remate2,0,1)." _ ";
@@ -339,7 +331,7 @@ else {
 */
 //echo "CHEQUES = ".$row_cheques_total['SUM( cartvalores.importe)']."   ";
 if ($tipo_de_iva== 1) {
-	$query_factura_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 125 || cabfac.tcomp = 126 || cabfac.tcomp = 122 || cabfac.tcomp = 127 || cabfac.tcomp = 133 || cabfac.tcomp = 134) AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.estado != 'A' AND cabfac.codrem ='$rematenum' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
+	$query_factura_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 125 || cabfac.tcomp = 126 || cabfac.tcomp = 122 || cabfac.tcomp = 127 || cabfac.tcomp = 133 || cabfac.tcomp = 134 || cabfac.tcomp = 136 || cabfac.tcomp = 143) AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.estado != 'A' AND cabfac.codrem ='$rematenum' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
 	$factura_total           = mysqli_query($amercado, $query_factura_total) or die("ERROR LEYENDO CABFAC 125, 126,122,127 ".$query_factura_total);
 	$row_factura_total 	     = mysqli_fetch_assoc($factura_total);
 	$totalRows_factura_total = mysqli_num_rows($factura_total);
@@ -353,7 +345,7 @@ if ($tipo_de_iva== 1) {
 	}
 	
     //Veo si tiene alguna Nota de Credito
-    $query_nc_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 119 || cabfac.tcomp = 120 || cabfac.tcomp = 121 || cabfac.tcomp = 135) AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.codrem ='$rematenum' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
+    $query_nc_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 119 || cabfac.tcomp = 120 || cabfac.tcomp = 121 || cabfac.tcomp = 135 || `tcomp`='144') AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.codrem ='$rematenum' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
 	$nc_total           = mysqli_query($amercado, $query_nc_total) or die("ERROR LEYENDO CABFAC 119 , 120 , 121 y 135");
 	$row_nc_total 	     = mysqli_fetch_assoc($nc_total);
 	$totalRows_nc_total = mysqli_num_rows($nc_total);
@@ -371,7 +363,7 @@ if ($tipo_de_iva== 1) {
 	}
 }
 else {
-	$query_factura_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 125 || cabfac.tcomp = 126 || cabfac.tcomp = 122 || cabfac.tcomp = 127 || cabfac.tcomp = 133 || cabfac.tcomp = 134 || cabfac.tcomp = 136)  AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.codrem ='$rematenum' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
+	$query_factura_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 125 || cabfac.tcomp = 126 || cabfac.tcomp = 122 || cabfac.tcomp = 127 || cabfac.tcomp = 133 || cabfac.tcomp = 134 || cabfac.tcomp = 136 || cabfac.tcomp = 143)  AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.codrem ='$rematenum' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
 	$factura_total           = mysqli_query($amercado, $query_factura_total) or die("ERROR LEYENDO CABFAC 125, 126,122,127 ".$query_factura_total);
 	$row_factura_total 	     = mysqli_fetch_assoc($factura_total);
 	$totalRows_factura_total = mysqli_num_rows($factura_total);
@@ -385,7 +377,7 @@ else {
 	}
 	
     //Veo si tiene alguna Nota de Credito
-    $query_nc_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 119 || cabfac.tcomp = 120 || cabfac.tcomp = 121 || cabfac.tcomp = 135) AND cabfac.codrem ='$rematenum'  AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
+    $query_nc_total     = sprintf("SELECT SUM( cabfac.totbruto) FROM cabfac WHERE (cabfac.tcomp = 119 || cabfac.tcomp = 120 || cabfac.tcomp = 121 || cabfac.tcomp = 135 || `tcomp`='144') AND cabfac.codrem ='$rematenum'  AND `fecreg` BETWEEN '$f_desde' AND '$f_hasta' AND cabfac.en_liquid = 1 AND cabfac.cliente = %s", $clientes);
 	$nc_total           = mysqli_query($amercado, $query_nc_total) or die("ERROR LEYENDO CABFAC 119 , 120 , 121 y 135");
 	$row_nc_total 	     = mysqli_fetch_assoc($nc_total);
 	$totalRows_nc_total = mysqli_num_rows($nc_total);

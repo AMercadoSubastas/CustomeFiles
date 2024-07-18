@@ -157,7 +157,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura") && $todo_
 	
 	
 	mysqli_select_db($amercado, $database_amercado);
-	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE razsoc = %s",GetSQLValueString($_POST['cliente'],"text"));
+	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE cuit = %s",GetSQLValueString($_POST['cuit'],"text"));
 	$cliente2 = mysqli_query($amercado, $query_cliente2) or die("ERROR EN LECTURA ENTIDADES 148");
 	$row_cliente2 = mysqli_fetch_assoc($cliente2);
 
@@ -295,7 +295,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura") && $todo_
     //CUIT (Sin guiones)
     $empresaCuit  = '30718033612'; // '20233616126';
     //El alias debe estar mencionado en el nombre de los archivos de certificados y firmas digitales
-    $empresaAlias = 'Subastasv8'; // 'ldb'; // 'AMERCADO1';
+    $empresaAlias = 'SubastasV8'; // 'ldb'; // 'AMERCADO1';
 
 
 	//Obtener los datos de la factura que se desea generar
@@ -2616,15 +2616,36 @@ function getRemate(form) {
          <td height="20" class="ewTableHeader">Fecha de remate</td>
           <td><input name="fecha_remate" type="text" size="25" /></td>
            </tr>
-        <tr>
-          <td height="10" class="ewTableHeader">Cliente</td>
-          <td><!-- CLIENTES -->
+		   <tr>
+          <td height="10" class="ewTableHeader">Cliente </td>
+          <td>
+			<div class="search-box-B">
+        		<input id="B-search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+    </tr>
+	<tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="B-CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
 
-			<div class="search-box">
-				<input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-				<div class="result"></div>
-			</div>
-			</td>
+	 <tr hidden>
+          <td height="10" class="ewTableHeader">Razon Social</td>
+          <td>
+			<div class="search-box-razan-social">
+        		<input id="B-razon-social" type="text" hidden />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
      </tr>
      </table></td>
     </tr>

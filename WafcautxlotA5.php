@@ -6,10 +6,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Documento sin t&iacute;tulo</title>
 <?php
-
 error_reporting(E_ERROR | E_PARSE);
 ini_set('display_errors','Yes');
-require_once('Connections/amercado.php'); 
+require_once('Connections/amercado.php');
 require_once "funcion_mysqli_result.php";
 
 
@@ -49,7 +48,7 @@ $fecha_dia = "\"".$fecha_dia."\"";
 //echo "FECHA : ".$fecha_dia."    ";
 $lastday = date('t',strtotime('today'));
 //echo "LASTDAY = ".$lastday."    ";
-$ultimo_dia = date('Y-m'); 
+$ultimo_dia = date('Y-m');
 
 $ultimo_dia = $ultimo_dia."-".$lastday;
 $ultimo_dia = "\"".$ultimo_dia."\"";
@@ -238,7 +237,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
      **/
     $fecha_vencimiento_pago = date('Y-m-d');
 
-	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE razsoc = %s",GetSQLValueString($_POST['cliente'],"text"));
+	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE cuit = %s",GetSQLValueString($_POST['cuit'],"text"));
 	$cliente2 = mysqli_query($amercado, $query_cliente2) or die("ERROR EN LECTURA ENTIDADES 148");
 	$row_cliente2 = mysqli_fetch_assoc($cliente2);
 
@@ -358,17 +357,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
 */
 if (isset($_POST['totneto105']) && $_POST['totneto105'] != 0.00  && ((isset($_POST['totneto21']) && $_POST['totneto21'] != 0.00) || (isset($_POST['totcomis']) && $_POST['totcomis'] != 0.00) || (isset($_POST['totimp']) && $_POST['totimp'] != 0.00))) {
 		$IvaAlicuotaId_1 = 4; // 10.5% Ver - AfipWsfev1::FEParamGetTiposIva()
-		$IvaAlicuotaBaseImp_1 = $_POST['totneto105'];
-		$IvaAlicuotaImporte_1 = $_POST['totiva105'];
+		$IvaAlicuotaBaseImp_1 = floatval($_POST['totneto105']);
+		$IvaAlicuotaImporte_1 = floatval($_POST['totiva105']);
 	
 		$IvaAlicuotaId_2 = 5; // 21% Ver - AfipWsfev1::FEParamGetTiposIva()
-		$IvaAlicuotaBaseImp_2 = $_POST['totneto21']  + $_POST['totcomis'] + $_POST['totimp']; 
-		$IvaAlicuotaImporte_2 = $_POST['totiva21'];
+		$IvaAlicuotaBaseImp_2 = floatval($_POST['totneto21'])  + floatval($_POST['totcomis']) + floatval($_POST['totimp']); 
+		$IvaAlicuotaImporte_2 = floatval($_POST['totiva21']);
 		
          $data = array(
         'CantReg' 	=> 1, // Cantidad de facturas a registrar
         'PtoVta' 	=> $punto_de_venta,
-        'CbteTipo' 	=> $tipo_de_factura, 
+        'CbteTipo' 	=> $tipo_de_factura,
         'Concepto' 	=> $concepto,
         'DocTipo' 	=> $tipo_de_documento,
         'DocNro' 	=> $numero_de_documento,
@@ -411,7 +410,9 @@ if (isset($_POST['totneto105']) && $_POST['totneto105'] != 0.00  && ((isset($_PO
                 )
         ),
     );
-    print_r($data); 
+    print_r($data);
+	echo '//////// aca empieza el vardump';
+	var_dump($data);
 	}
 	else {
 		if (isset($_POST['totneto105']) && $_POST['totneto105'] != 0.00) {
@@ -465,7 +466,7 @@ if (isset($_POST['totneto105']) && $_POST['totneto105'] != 0.00  && ((isset($_PO
             $data = array(
                 'CantReg' 	=> 1, // Cantidad de facturas a registrar
                 'PtoVta' 	=> $punto_de_venta,
-                'CbteTipo' 	=> $tipo_de_factura, 
+                'CbteTipo' 	=> $tipo_de_factura,
                 'Concepto' 	=> $concepto,
                 'DocTipo' 	=> $tipo_de_documento,
                 'DocNro' 	=> $numero_de_documento,
@@ -512,7 +513,7 @@ if (isset($_POST['totneto105']) && $_POST['totneto105'] != 0.00  && ((isset($_PO
 	//======================================================================================
 
     /** 
-     * Creamos la Factura 
+     * Creamos la Factura
      **/
     echo "DATA = ".$data."  ";
     
@@ -1134,8 +1135,8 @@ if ($sigo_y_grabo == 1 && $todo_ok ==1) {
 
 		if (!empty($_POST['imprime'])) { 
 			$facnum = $num_fac;
-			$tipcomp = 117; //GetSQLValueString($_POST['tcomp'], "int");
-			$numserie = 54; //GetSQLValueString($_POST['serie'], "int");
+			$tipcomp = GetSQLValueString(117, "int");
+			$numserie = GetSQLValueString(54, "int");
 				echo '<script type="text/javascript">';
 				echo 'window.location.href="rp_facncA.php?ftcomp=' . $tipcomp . '&fserie=' . $numserie . '&fncomp=' . $num_fac . '";';
 				echo '</script>';
@@ -3026,7 +3027,7 @@ DHTMLSuite.include("chainedSelect");
 			currentLoteID5= loteId5;
 			ajax6.requestFile = 'getlote5.php?getloteId5='+loteId5+'&getremate_num='+RemateId;	// Specifying which file to get
 	    	ajax6.onCompletion = showLoteData5;	// Specify function that will be executed after file has been found
-			ajax6.runAJAX();		// Execute AJAX function			
+			ajax6.runAJAX();		// Execute AJAX function
 		}	
 	}
 		
@@ -3038,9 +3039,9 @@ DHTMLSuite.include("chainedSelect");
 			currentLoteID6= loteId6;
 			ajax7.requestFile = 'getlote6.php?getloteId6='+loteId6+'&getremate_num='+RemateId;	// Specifying which file to get
 			ajax7.onCompletion = showLoteData6;	// Specify function that will be executed after file has been found
-			ajax7.runAJAX();		// Execute AJAX function			
-		}	
-	}	
+			ajax7.runAJAX();		// Execute AJAX function
+		}
+	}
 
 	function getLoteData7()  /// Octavo lote
 	{
@@ -3050,8 +3051,8 @@ DHTMLSuite.include("chainedSelect");
  			currentLoteID7= loteId7;
  			ajax8.requestFile = 'getlote7.php?getloteId7='+loteId7+'&getremate_num='+RemateId;	// Specifying which file to get
  			ajax8.onCompletion = showLoteData7;	// Specify function that will be executed after file has been found
- 			ajax8.runAJAX();		// Execute AJAX function			
- 		}	
+ 			ajax8.runAJAX();		// Execute AJAX function
+ 		}
  	}
  
  	function getLoteData8()  /// Noveno lote
@@ -3062,9 +3063,9 @@ DHTMLSuite.include("chainedSelect");
  			currentLoteID8= loteId8;
  			ajax9.requestFile = 'getlote8.php?getloteId8='+loteId8+'&getremate_num='+RemateId;	// Specifying which file to get
  			ajax9.onCompletion = showLoteData8;	// Specify function that will be executed after file has been found
- 			ajax9.runAJAX();		// Execute AJAX function			
- 		}	
- 	}	
+ 			ajax9.runAJAX();		// Execute AJAX function
+ 		}
+ 	}
   
   	function getLoteData9()  /// Decimo lote
 	{
@@ -3074,8 +3075,8 @@ DHTMLSuite.include("chainedSelect");
  			currentLoteID9= loteId9;
  			ajax10.requestFile = 'getlote9.php?getloteId9='+loteId9+'&getremate_num='+RemateId;	// Specifying which file to get
  			ajax10.onCompletion = showLoteData9;	// Specify function that will be executed after file has been found
- 			ajax10.runAJAX();		// Execute AJAX function			
- 		}	
+ 			ajax10.runAJAX();		// Execute AJAX function
+ 		}
  	}
  
 	function getLoteData10()  ///  Lote Once
@@ -3086,9 +3087,9 @@ DHTMLSuite.include("chainedSelect");
  			currentLoteID10= loteId10;
  			ajax11.requestFile = 'getlote10.php?getloteId10='+loteId10+'&getremate_num='+RemateId;	// Specifying which file to get
  			ajax11.onCompletion = showLoteData10;	// Specify function that will be executed after file has been found
- 			ajax11.runAJAX();		// Execute AJAX function			
- 		}	
- 	}	
+ 			ajax11.runAJAX();		// Execute AJAX function
+ 		}
+ 	}
  
 	function getLoteData11()  /// Lote Doce
 	{
@@ -3206,31 +3207,31 @@ DHTMLSuite.include("chainedSelect");
 		
 	function showLoteData10() // Once lote
 	{
-	 	var formObj11 = document.forms['factura'];	
+	 	var formObj11 = document.forms['factura'];
 	 	eval(ajax11.response);
 	}
 		
 	function showLoteData11() // Docelote
 	{
-		var formObj12 = document.forms['factura'];	
+		var formObj12 = document.forms['factura'];
 	 	eval(ajax12.response);
 	}	
 
 	function showLoteData12() // Trece lote
 	{
-		var formObj13 = document.forms['factura'];	
+		var formObj13 = document.forms['factura'];
 	 	eval(ajax13.response);
 	}	
 			
 	function showLoteData13() // Catorce lote
 	{
-		var formObj14 = document.forms['factura'];	
+		var formObj14 = document.forms['factura'];
 	 	eval(ajax14.response);
 	}
 
 	function showLoteData14() // Quince lote
 	{
-		var formObj15 = document.forms['factura'];	
+		var formObj15 = document.forms['factura'];
 	 	eval(ajax15.response);
 	}
 					
@@ -3301,7 +3302,7 @@ DHTMLSuite.include("chainedSelect");
 
 	function neto(form)
 	{ 
-		importe = factura.importes.value; 
+		importe = factura.importes.value;
    		document.write(importe);
 	}
 
@@ -3490,15 +3491,36 @@ DHTMLSuite.include("chainedSelect");
           <td><input name="fecha_remate" type="text" size="12" value= "<?php echo $fec_remate; ?>"/></td>
           <td>&nbsp;</td>
           </tr>
-        <tr>
+		  <tr>
           <td height="10" class="ewTableHeader">Cliente </td>
-          <td><!-- CLIENTES -->
+          <td>
+			<div class="search-box-A">
+        		<input id="A-search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+        		<div class="result"></div>
+    		</div>
+		   </td>
+          <td>&nbsp;</td>
+    </tr>
+	<tr hidden>
+          <td height="10" class="ewTableHeader">CUIT</td>
+          <td>
+			<div class="search-box-cuit">
+        		<input id="A-CUIT" name="cuit" type="text" />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
+     </tr>
 
-			<div class="search-box">
-				<input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-				<div class="result"></div>
-			</div>
-			</td>
+	 <tr hidden>
+          <td height="10" class="ewTableHeader">Razon Social</td>
+          <td>
+			<div class="search-box-razan-social">
+        		<input id="A-razon-social" type="text" hidden />
+        		<div class="result"></div>
+    		</div>
+		  </td>
+          <td>&nbsp;</td>
      </tr>
      </table></td>
     </tr>

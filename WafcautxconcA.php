@@ -254,7 +254,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
     //CUIT (Sin guiones)
      $empresaCuit  = '30718033612';//'20233616126'; //test: 20167747354 //prod 30718033612
     //El alias debe estar mencionado en el nombre de los archivos de certificados y firmas digitales
-     $empresaAlias = 'SubastasTesting'; // 'ldb';
+     $empresaAlias = 'SubastasV8'; // 'ldb';
 
 
 // 	Obtener los datos de la factura que se desea generar
@@ -524,17 +524,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
             if ($descrip3[0] == " ")
                 $descrip3 = substr($descrip3,1,90);
 			if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
-  				$insertSQL = sprintf("INSERT INTO detfac (tcomp, serie, ncomp, nreng, codrem, concafac, descrip, neto, comcob, concafac, usuario) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  				$insertSQL = sprintf("INSERT INTO detfac (tcomp, serie, ncomp, nreng, codrem, concafac, descrip, neto, comcob, usuario) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        FC_A2,
                        SERIE_A2,
                        $num_fac, //GetSQLValueString($_POST['num_factura'], "int"),
 					   GetSQLValueString($_POST['secuencia3'], "int"),
                        GetSQLValueString($_POST['remate_num'], "int"),
-                       GetSQLValueString($_POST['secuencia3'], "int"),
+                       GetSQLValueString($_POST['concepto3'], "int"),
                        $descrip3, //GetSQLValueString($_POST['descripcion3'], "text"),
                        GetSQLValueString($_POST['importe3'], "double"),
                        0,
-                        GetSQLValueString($_POST['concepto3'], "int"),
                        $cod_usuario);
 
   				mysqli_select_db($amercado,$database_amercado);
@@ -2022,8 +2021,8 @@ function MM_validateForm() { //v4.0
     		</div>
 		   </td>
           <td>&nbsp;</td>
-     	</tr>
-		 <tr hidden>
+    </tr>
+	<tr hidden>
           <td height="10" class="ewTableHeader">CUIT</td>
           <td>
 			<div class="search-box-cuit">

@@ -1,12 +1,12 @@
 <?php require_once('Connections/amercado.php'); 
 include_once "funcion_mysqli_result.php";
-if (isset($_POST['cliente'])) {
-	$cliente = $_POST['cliente'];
+if (isset($_POST['cuit'])) {
+	$cliente = $_POST['cuit'];
 	echo "Nro.Cliente = ".$cliente;
 }
 mysqli_select_db($amercado, $database_amercado);
 
-$query_cliente = "SELECT entidades.codnum, entidades.razsoc , entidades.calle , entidades.numero ,  entidades.codloc , entidades.codprov FROM entidades WHERE razsoc='$cliente' and activo=1";
+$query_cliente = "SELECT entidades.codnum, entidades.razsoc , entidades.calle , entidades.numero ,  entidades.codloc , entidades.codprov FROM entidades WHERE cuit='$cliente' and activo=1";
 $selec_cliente = mysqli_query($amercado, $query_cliente) or die("ERROR LEYENDO CLIENTE ".$cliente." ");
 $row_cliente = mysqli_fetch_assoc($selec_cliente);
 

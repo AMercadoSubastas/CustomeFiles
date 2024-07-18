@@ -8,7 +8,7 @@
 <?php 
 error_reporting(E_ERROR | E_PARSE);
 ini_set('display_errors','Yes');
-require_once('Connections/amercado.php'); 
+require_once('Connections/amercado.php');
 include_once 'funcion_mysqli_result.php';
 include 'afip.php-master/src/Afip.php';
 //include_once "FE_Pack_WSFE/config.php";
@@ -24,7 +24,7 @@ $query_comprobante = sprintf("SELECT * FROM series  WHERE series.codnum = %s", "
 $comprobante = mysqli_query($amercado, $query_comprobante) or die("ERROR LEYENDO SERIES");
 $row_comprobante = mysqli_fetch_assoc($comprobante);
 $totalRows_comprobante = mysqli_num_rows($comprobante);
-$num_comp = ($row_comprobante['nroact'])+1 ; 
+$num_comp = ($row_comprobante['nroact'])+1 ;
 
 
 $cod_usuario = $_SESSION['id'];
@@ -45,7 +45,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
      */
     //Cabecera
     $afip = new Afip(array('CUIT' => 30718033612,
-                            'production' => TRUE,
+                            'production' => true,
                           'key' 		=> 'SubastasV8_prod.key',
                           'cert' 		=> 'SubastasV8_prod.crt'));
     /**
@@ -109,7 +109,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
     $fecha_vencimiento_pago = date('Y-m-d');
 
     mysqli_select_db($amercado,$database_amercado);
-	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE razsoc = %s",GetSQLValueString($_POST['cliente'],"text"));
+	$query_cliente2 = sprintf("SELECT * FROM entidades WHERE cuit = %s",GetSQLValueString($_POST['cuit'],"text"));
 	$cliente2 = mysqli_query($amercado,$query_cliente2) or die(mysqli_error($amercado));
 	$row_cliente2 = mysqli_fetch_assoc($cliente2);
 	
@@ -302,7 +302,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "factura")) {
             $data = array(
                 'CantReg' 	=> 1, // Cantidad de facturas a registrar
                 'PtoVta' 	=> $punto_de_venta,
-                'CbteTipo' 	=> $tipo_de_factura, 
+                'CbteTipo' 	=> $tipo_de_factura,
                 'Concepto' 	=> $concepto,
                 'DocTipo' 	=> $tipo_de_documento,
                 'DocNro' 	=> $numero_de_documento,
@@ -2457,17 +2457,38 @@ function getRemate(form) {
          	<td height="20" class="ewTableHeader">Fecha de remate</td>
           	<td><input name="fecha_remate" type="text" size="25" /></td>
         </tr>
-        <tr>
-          	<td height="10" class="ewTableHeader">Cliente </td>
-          	<td>
-
-			<div class="search-box">
-				<input type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
-				<div class="result"></div>
-			</div>	
-
+        </tr>
+			<tr>
+			<td height="10" class="ewTableHeader">Cliente </td>
+			<td>
+				<div class="search-box-A">
+					<input id="A-search-field" type="text" autocomplete="off" name="cliente" required placeholder="Buscar..." />
+					<div class="result"></div>
+				</div>
 			</td>
-     	</tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr hidden>
+			<td height="10" class="ewTableHeader">CUIT</td>
+			<td>
+				<div class="search-box-cuit">
+					<input id="A-CUIT" name="cuit" type="text" />
+					<div class="result"></div>
+				</div>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+
+		<tr hidden>
+			<td height="10" class="ewTableHeader">Razon Social</td>
+			<td>
+				<div class="search-box-razan-social">
+					<input id="A-razon-social" type="text" hidden/>
+					<div class="result"></div>
+				</div>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
      	</table></td>
     </tr>
     <tr>

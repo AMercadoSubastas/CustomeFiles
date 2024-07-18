@@ -13,7 +13,7 @@ mysqli_select_db($amercado, $database_amercado);
 
 // Leo los parámetros del formulario anterior
 
-$cliente    = $_POST['cliente'];
+$cliente    = $_POST['cuit'];
 
 $fechahoy = date("d-m-Y");
 
@@ -21,7 +21,7 @@ $fechahoy = date("d-m-Y");
 $pe = "P";
 $ese = "S";
 mysqli_select_db($amercado, $database_amercado);
-$query_cliente = "SELECT * FROM entidades WHERE razsoc = '$cliente'";
+$query_cliente = "SELECT * FROM entidades WHERE cuit = '$cliente'";
 $cliente_q = mysqli_query($amercado, $query_cliente) or die(mysqli_error($amercado));
 $row_cliente = mysqli_fetch_assoc($cliente_q);
 $cliente = $row_cliente["codnum"];
@@ -95,7 +95,7 @@ while($row_cabecerafac = mysqli_fetch_array($cabecerafac))
 	$row_Recordset3 = mysqli_fetch_assoc($tipcomp);
 	
 
-	if ($tcomp ==  119 ||  $tcomp ==  120 || $tcomp == 121 || $tcomp == 135) {
+	if ($tcomp ==  119 ||  $tcomp ==  120 || $tcomp == 121 || $tcomp == 135 || $tcomp == 137 || $tcomp == 144) {
 		$tc = "NC-";
 		$signo = -1;
 	}
@@ -204,7 +204,7 @@ while($row_cabecerafac = mysqli_fetch_array($cabecerafac))
 		$detrecibo = mysqli_query($amercado, $query_detrecibo) or die("ERROR LEYENDO DETRECIBO ".$query_detrecibo." - ");
 		while ($row_detrecibo = mysqli_fetch_array($detrecibo)) {
 		if ($row_detrecibo["tcomprel"] == 119 || $row_detrecibo["tcomprel"] == 120 || $row_detrecibo["tcomprel"] == 121 || $row_detrecibo["tcomprel"] == 135) 
-			$signo_recibo = 1;
+			$signo_recibo = -1;
 		else
 			$signo_recibo = -1;
 		//$netocbterel = $row_detrecibo["netocbterel"] * $signo_recibo;
